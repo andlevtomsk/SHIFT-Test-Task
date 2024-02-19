@@ -31,6 +31,7 @@ public class MultipleReader {
                 String[] arguments = line.split(" ");
                 sc.close();
                 Main.main(arguments);
+                System.exit(0);
             }
         }
         return readers;

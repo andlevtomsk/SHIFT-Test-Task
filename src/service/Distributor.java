@@ -96,6 +96,15 @@ public class Distributor {
      * This function distributes lines by files and returns statistics
      */
     public Statistics distribute() {
+        if (files.isEmpty()) {
+            System.out.println("You have not specified the files for analysis. Enter the correct command one more time");
+            Scanner sc = new Scanner(System.in);
+            String line = sc.nextLine();
+            String[] arguments = line.split(" ");
+            sc.close();
+            Main.main(arguments);
+            System.exit(0);
+        }
         integersFileName = this.namePrefix + "integers.txt";
         floatsFileName = this.namePrefix + "floats.txt";
         stringsFileName = this.namePrefix + "strings.txt";
