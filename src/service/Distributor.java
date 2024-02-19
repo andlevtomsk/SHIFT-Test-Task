@@ -195,8 +195,8 @@ public class Distributor {
             averageDoubleValue = BigDecimal.valueOf(0);
         }
 
-        Statistics statistics = new Statistics(countLong, countDouble, countString, maxLong, minLong, maxDouble,
-                minDouble, maxLength, minLength, averageLongValue, averageDoubleValue);
+        Statistics statistics = new Statistics(countLong, countDouble, countString, sumLong, maxLong, minLong, maxDouble,
+                minDouble, sumDouble, maxLength, minLength, averageLongValue, averageDoubleValue);
 
 
         integersFile = new File(pathToResults + File.separatorChar + integersFileName);

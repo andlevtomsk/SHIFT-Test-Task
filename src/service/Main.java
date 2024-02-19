@@ -48,6 +48,7 @@ public class Main {
             if (statistics.countLong() != 0) {
                 System.out.printf("The minimal integer number is %d\n", statistics.minLong());
                 System.out.printf("The maximal integer number is %d\n", statistics.maxLong());
+                System.out.printf("The integers sum is %d\n", statistics.sumLong());
                 System.out.printf("The average integer number is %.2f\n\n", statistics.averageLongValue());
             } else {
                 System.out.print("Since there are no integers, there are no statistics on the minimum, maximum and average values\n\n");
@@ -56,6 +57,7 @@ public class Main {
             if (statistics.countDouble() != 0) {
                 System.out.printf("The minimal real number is %s\n", statistics.minDouble());
                 System.out.printf("The maximal real number is %s\n", statistics.maxDouble());
+                System.out.printf("The floats sum is %.2f\n", statistics.sumDouble());
                 System.out.printf("The average real number is %.2f\n\n", statistics.averageDoubleValue());
             } else {
                 System.out.print("Since there are no floats, there are no statistics on the minimum, maximum and average values\n\n");
