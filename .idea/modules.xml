@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SHIFT Test Task.iml" filepath="$PROJECT_DIR$/SHIFT Test Task.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ShiftTestTask.iml" filepath="$PROJECT_DIR$/ShiftTestTask.iml" />
     </modules>
   </component>
 </project>
