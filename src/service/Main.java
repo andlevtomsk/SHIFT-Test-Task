@@ -1,23 +1,17 @@
 package service;
 
 import java.io.File;
-import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Iterator;
 
 public class Main {
 
-    private static Params.Builder builder;
-    private static Params params;
-    private static DataReader dataReader;
-    private static Distributor distributor;
-
-
     /**
      * This method read command that user have entered. All data save in params
      */
-    private static void readConsoleCommand(String[] args) {
+    private static Params readConsoleCommand(String[] args) {
+        Params.Builder builder = new Params.Builder();
+
         Iterator<String> iterator = Arrays.stream(args).iterator();
         while (iterator.hasNext()) {
             String a = iterator.next();
@@ -36,63 +30,54 @@ public class Main {
                 builder.addFile(new File(a));
             }
         }
+
+        return builder.build();
     }
 
     /**
      * This method write all statistics that were given by distributor
      */
-    private static void writeStatistics() {
+    private static void writeStatistics(Statistics statistics, Params params) {
 
-        DecimalFormat formatter = new DecimalFormat("0.00");
-
-        if (params.getStaticticsType() == 1) {
-            System.out.println("Integers file contains " + params.getCountLong() + " numbers\n" +
-                    "Floats file contains " + params.getCountDouble() + " numbers\n" +
-                    "Strings file contains " + params.getCountString() + " lines");
-        } else if (params.getStaticticsType() == 2) {
-            System.out.println("Integers file contains " + params.getCountLong() + " numbers");
-            if (params.getCountLong() != 0) {
-                System.out.println("The minimal integer number is " + params.getMinLong() + '\n' +
-                        "The maximal integer number is " + params.getMaxLong() + '\n' +
-                        "The average integer value is " + formatter.format(params.getAverageLongValue()) + "\n");
+        if (params.getStatisticsType() == 1) {
+            System.out.printf("%d integers have been added to the integers file\n", statistics.countLong());
+            System.out.printf("%d floats have been added to the floats file\n", statistics.countDouble());
+            System.out.printf("%d strings have been added to the strings file\n\n", statistics.countString());
+        } else if (params.getStatisticsType() == 2) {
+            System.out.printf("%d integers have been added to the integers file\n", statistics.countLong());
+            if (statistics.countLong() != 0) {
+                System.out.printf("The minimal integer number is %d\n", statistics.minLong());
+                System.out.printf("The maximal integer number is %d\n", statistics.maxLong());
+                System.out.printf("The average integer number is %.2f\n\n", statistics.averageLongValue());
             } else {
-                System.out.println("Since there are no integers, there are no statistics on the minimum, maximum and average values\n");
+                System.out.print("Since there are no integers, there are no statistics on the minimum, maximum and average values\n\n");
             }
-
-            System.out.println("Floats file contains " + params.getCountDouble() + " numbers");
-            if (params.getCountDouble() != 0) {
-                System.out.println("The minimal real number is " + params.getMinDouble() + '\n' +
-                        "The maximal real number is " + params.getMaxDouble() + '\n' +
-                        "The average real value is " + formatter.format(params.getAverageDoubleValue()) + "\n");
+            System.out.printf("%d floats have been added to the floats file\n", statistics.countDouble());
+            if (statistics.countDouble() != 0) {
+                System.out.printf("The minimal real number is %s\n", statistics.minDouble());
+                System.out.printf("The maximal real number is %s\n", statistics.maxDouble());
+                System.out.printf("The average real number is %.2f\n\n", statistics.averageDoubleValue());
             } else {
-                System.out.println("Since there are no floats, there are no statistics on the minimum, maximum and average values\n");
+                System.out.print("Since there are no floats, there are no statistics on the minimum, maximum and average values\n\n");
             }
-
-            System.out.println("Strings file contains " + params.getCountString() + " lines");
-            if (params.getCountString() != 0) {
-                System.out.println("The maximal length is " + params.getMaxLength() + " symbols\n" +
-                        "The minimal length is " + params.getMinLength() + " symbols");
+            System.out.printf("%d strings have been added to the strings file\n", statistics.countString());
+            if (statistics.countString() != 0) {
+                System.out.printf("The maximal length is %d symbols\n", statistics.maxLength());
+                System.out.printf("The minimal length is %d symbols\n\n", statistics.minLength());
             } else {
-                System.out.println("Since there are no strings, there are no statistics on the minimum, maximum and average values.");
+                System.out.print("Since there are no strings, there are no statistics on the minimum, maximum and average values\n\n");
             }
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
-        builder = new Params.Builder();
+        Params params = readConsoleCommand(args);
 
-        readConsoleCommand(args);
+        Distributor distributor = new Distributor(params.getFiles(), params.getPathToResults(), params.getNamePrefix(), params.getAddToExistingFiles());
+        Statistics statistics = distributor.distribute();
 
-        params = builder.build();
-
-        dataReader = new DataReader(params.getFiles());
-        dataReader.read();
-
-        distributor = new Distributor(dataReader, params, params.getPathToResults(), params.getNamePrefix(), params.getAddToExistingFiles());
-        distributor.distribute();
-
-        writeStatistics();
+        writeStatistics(statistics, params);
 
     }
 }
