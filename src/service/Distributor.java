@@ -71,8 +71,8 @@ public class Distributor {
             String newNamePrefix = sc.nextLine();
             name = name.replace(namePrefix, newNamePrefix);
             updateNamesAndFiles(newNamePrefix);
-            sc.close();
             write(new File(pathToResults + File.separatorChar + name), text, name);
+            sc.close();
         } catch (IOException e) {
             System.out.println("There were some problems with writing to a file or closing Writer. The program continues to work, but the result may be incorrect.");
         }
@@ -101,8 +101,8 @@ public class Distributor {
             Scanner sc = new Scanner(System.in);
             String line = sc.nextLine();
             String[] arguments = line.split(" ");
-            sc.close();
             Main.main(arguments);
+            sc.close();
             System.exit(0);
         }
         integersFileName = this.namePrefix + "integers.txt";

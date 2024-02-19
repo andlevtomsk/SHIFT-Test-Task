@@ -25,12 +25,12 @@ public class MultipleReader {
             try {
                 readers.add(new BufferedReader(new FileReader(file)));
             } catch (FileNotFoundException e) {
-                System.out.println("You set the wrong path to the input file(s).\nPlease correct the command you entered.");
+                System.out.println("You set the wrong path to the input file(s). Please correct the command you entered.");
                 Scanner sc = new Scanner(System.in);
                 String line = sc.nextLine();
                 String[] arguments = line.split(" ");
-                sc.close();
                 Main.main(arguments);
+                sc.close();
                 System.exit(0);
             }
         }
